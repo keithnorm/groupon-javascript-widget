@@ -8,9 +8,10 @@ body {
 	font-size:75%;
 	line-height:1.4em;
 	min-height:500px;
+	background:#25857d url(../img/bg-run.jpg) repeat-x top;
 }
 #global-wrap {
-	padding-bottom:20px;
+	padding:40px 0;
 }
 #main-wrap {
 	width:800px;
@@ -61,8 +62,10 @@ fieldset {
 #header-wrap {
 	height:120px;
 	background:#fff;
+	background:#25857d;
 }
 #logo {
+  padding-top:10px;
 }
 #logo a {
 	float:left;
@@ -77,21 +80,21 @@ fieldset {
 	
 }
 #nav li {
-	padding-top:89px;
+	padding-top:79px;
 	height:31px;
 	float:left;
 	margin-right:10px;
 }
 #nav li.current {
-	padding-top:76px;
+	padding-top:66px;
 	height:44px;
 }
 
 #content-wrap {
-	background:#dcdfca;
 	-moz-border-radius: 7px;
 	-webkit-border-radius: 7px;
 	padding:20px;
+	background:#dcdfca url(../img/drip.jpg) no-repeat 5px top;
 }
 #content-left {
 	width:358px;

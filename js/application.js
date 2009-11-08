@@ -36,7 +36,7 @@ $(function() {
       case "theme[shell_background]" :
         return defaultTheme["shell"]["background"];
         break
-      case "theme[deal_title]" :
+      case "theme[header_color]" :
         return defaultTheme["header"]["color"];
         break;
       case "theme[deal_background]":
@@ -53,63 +53,82 @@ $(function() {
   
   function writeThemeParams(obj){
     var theme = {};
-    
     for(var prop in obj){
+      
       if(obj[prop] != mapToDefault(prop)){
-        console.log("prop is: " + prop  + " value is: " + obj[prop]);
-        console.log(obj[prop]);
         switch(prop){
           case "theme[rounded]" :
              theme["rounded"] = obj[prop];
             break;
           case "theme[link_color]" :
-            theme.deal = {};
-             theme["deal"]["link_color"] = obj[prop];
+            theme.deal = theme.deal || {};
+             theme["deal"]["link_color"] = "#" + obj[prop];
             break;
           case "theme[color]" :
-            theme.shell = {};
-             theme["shell"]["color"] = obj[prop];
+            theme.shell = theme.shell || {};
+             theme["shell"]["color"] = "#" + obj[prop];
             break;
           case "theme[shell_background]" :
-            theme.shell = {};
-             theme["shell"]["background"] = obj[prop];
+            theme.shell = theme.shell || {};
+             theme["shell"]["background"] = "#" + obj[prop];
             break
-          case "theme[deal_title]" :
-            theme.header = {};
-             theme["header"]["color"] = obj[prop];
+          case "theme[header_color]" :
+            theme.header = theme.header || {};
+             theme["header"]["color"] = "#" + obj[prop];
             break;
           case "theme[deal_background]":
-            theme.deal = {};
-             theme["deal"]["background"] = obj[prop];
+            theme.deal = theme.deal || {};
+             theme["deal"]["background"] = "#" + obj[prop];
             break;
           case "theme[get_it_btn_background]" :
-            theme.buttons = {};
-            theme.get_it_btn = {};
-             theme["buttons"]["get_it_btn"]["background"] = obj[prop];
+            theme.buttons = theme.buttons || {};
+            theme.buttons.get_it_btn = theme.buttons.get_it_btn || {};
+             theme["buttons"]["get_it_btn"]["background"] = "#" + obj[prop];
             break;
           case "theme[price_tag_btn_background]" :
-            theme.buttons = {};
-            theme.price_tag_btn = {};
-             theme["buttons"]["price_tag_btn"]["background"] = obj[prop];
+            theme.buttons = theme.buttons || {};
+            theme.buttons.price_tag_btn = theme.buttons.price_tag_btn || {};
+             theme["buttons"]["price_tag_btn"]["background"] = "#" + obj[prop];
             break;
         }
       }
     }
     for (var prop in theme){
-      if(theme[prop] == "" || theme[prop] == {})
+      if(theme[prop] == "" || theme[prop] == {} || isEmpty(theme[prop])){
+        console.log("deleting: " + theme[prop]);
         delete theme[prop];
-      console.log(theme[prop]);
+      }
     }
     return theme
   }
-  
   $("#widget_builder_form").submit(function(e){
-    console.log(e);
     e.preventDefault();
-    console.log(writeThemeParams($(e.target).serializeObject()));
+    var formParams = $(e.target).serializeObject();
+    if(!formParams["theme[rounded]"])
+      formParams["theme[rounded]"] = "off";
+    var theme = writeThemeParams(formParams);
+    var opts = {};
+    opts.referral_code = formParams["referral_code"];
+    opts.city = formParams["city"];
+    opts.theme = theme;
+    opts.
+    var widgetEmbedCode = "<script type='text/javascript' src='http://grouponwidget.dev/groupon_widget.js'></script>";
+    widgetEmbedCode += "<script type='text/javascript'>"
+    widgetEmbedCode += "new GRPN.Widget(";
+    widgetEmbedCode += $.toJSON(opts);
+    widgetEmbedCode += ").render();";
+    widgetEmbedCode += "</script>"
+    $("#widget_embed_code").val(widgetEmbedCode);
   })
   
 })
+
+var isEmpty = function(obj) {
+    for (var prop in obj) {
+        if (obj.hasOwnProperty(prop)) return false;
+    }
+    return true;
+};
 
 $.fn.serializeObject = function()
 {
