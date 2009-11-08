@@ -205,7 +205,6 @@
 				var cal = $('#' + $(this).data('colorpickerId'));
 				cal.data('colorpicker').onBeforeShow.apply(this, [cal.get(0)]);
 				var pos = $(this).offset();
-				console.log($(cal).width());
 				var viewPort = getViewport();
 				var top = pos.top + this.offsetHeight;
 				var left = pos.left;
