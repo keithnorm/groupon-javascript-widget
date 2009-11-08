@@ -407,11 +407,14 @@ String.prototype.template = function (o) {
                     
                     this._widgetNumber = ++GRPN.Widget.WIDGET_NUMBER;
                     GRPN.Widget["receiveCallback_" + this._widgetNumber] = function (response) {
+                      if(response.deals.length > 0){
                         self.deal = response.deals[0].deal;
                         self._formatDollars(self.deal, ["discount_amount", "price", "value"]);
                         self._addReferralCodeToLinks(self.deal);
-                        self.status = response.status
-                        self.renderHTML();
+                        self._normalizeUrlParams(self.deal);
+                      }
+                      self.status = response.status
+                      self.renderHTML();
                     };
                     this._cb = "GRPN.Widget.receiveCallback_" + this._widgetNumber;
                     this.opts = options;
@@ -427,8 +430,7 @@ String.prototype.template = function (o) {
                     this.theme = Extend(options.theme || {}, this._getDefaultTheme());
                     if (!options.id) {
                         var roundedClass = this.theme.rounded ? 'rounded' : '';
-                        document.write('<div id="groupon_widget" class="' + roundedClass + '">')
-                        
+                        document.write('<div id="groupon_widget" class="' + roundedClass + '">');
                     }
                     this.widgetEl = G(this.id);
                     if (options.id) {
@@ -471,7 +473,7 @@ String.prototype.template = function (o) {
                     h += "#groupon_widget #price_tag {background: " + this.theme.buttons.price_tag_btn.background  + "} ";
                     h += "#groupon_widget #groupon_box {background:" + this.theme.deal.background + "; color: " + this.theme.deal.color + ";}";
                     h += "#groupon_widget a {color: " + this.theme.deal.link_color + "}";
-                    h += "#groupon_widget { background: " + this.theme.shell.background + "; color: " + this.theme.shell.color + ";}";
+                    h += "#groupon_widget { background-color: " + this.theme.shell.background + "; color: " + this.theme.shell.color + ";}";
                     h += "#groupon_widget #price_tag_wrap #triangle{border-right-color:" + this.theme.buttons.price_tag_btn.background + "}";
                     h += "#groupon_widget #price_tag_wrap #price_tag{background: " + this.theme.buttons.price_tag_btn.background + "}";
                     if (isIE.ie) {
@@ -520,6 +522,10 @@ String.prototype.template = function (o) {
                   deal.buy_url = "http://groupon.com/deals/" + this.deal.id + "/confirmation?utm_source=" + this.opts.referral_code;
                 },
                 
+                _normalizeUrlParams: function(deal){
+                  deal.deal_url = ("http://groupon.com/deals/{id}/?utm_source=" + this.opts.referral_code).template(deal);
+                },
+                
                 _getDefaultTheme: function () {
                     return {
                         header: {
@@ -561,7 +567,7 @@ String.prototype.template = function (o) {
                     function body() {
                       var roundedClass = self.theme.rounded ? 'rounded' : '';
                       var html = '<div id="groupon_box" class=" ' + roundedClass + '">';
-                      html += '<h2><a href="{division_url}">{title}</a></h2>';
+                      html += '<h2><a href="{deal_url}">{title}</a></h2>';
                       html += '<div id="left"><div id="price_tag_wrap"><div id="triangle"></div>';
                       html += '<div id="price_tag">{price}</div></div><table id="breakdown">';
                       html += '<tr><th>value</th><th>discount</th><th>save</th></tr>';
@@ -570,7 +576,7 @@ String.prototype.template = function (o) {
                       html += '<table id="number_bought" class="bold"><tr><td id="number">{quantity_sold}</td></tr>';
                       html += '<tr><td>bought</td></tr></table>';
                       //html += '<table><tr colspan="4"><td>time left to buy</td></tr></table>';
-                      html += '</div><div id="right"><p id="deal_image"><img src="{large_image_url}" /></p><div id="get_it" class="get_it_rounded">';
+                      html += '</div><div id="right"><p id="deal_image"><a href="{deal_url}"><img src="{large_image_url}" /></a></p><div id="get_it" class="get_it_rounded">';
                       html += '<a href="{buy_url}">GET IT!</a></div></div></div>';
                       return html;
                     }
