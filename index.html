@@ -20,12 +20,14 @@
     <script type="text/javascript" src="js/utils.js"></script>
     <script type="text/javascript" src="js/layout.js?ver=1.0.2"></script>
 	<script type="text/javascript" src="js/colorpicker.js"></script>
+  <script type="text/javascript" src="js/preview.js"></script>
 	<script type="text/javascript">
 		$(function(){
 			$('.colorpick').ColorPicker(
 				{
 					onChange:function(input, rgb, hex, c, d){
 						$(input).val(hex);
+						preview($(input).attr("id"), hex);
 					},
 					color: $(this).val()
 				});
@@ -74,7 +76,7 @@
 									<input class="colorpick" type="text" id="get_it_color" maxlength="6" value="423490"/>
 								</div>
 								<div class="row">
-									<label for="price_tag_color">BG color&nbsp;&nbsp;<span>#<span></label>
+									<label for="price_tag_color">Price Tag Color&nbsp;&nbsp;<span>#<span></label>
 									<input class="colorpick" type="text" id="price_tag_color" maxlength="6" value="423490"/>
 								</div>
 								<div class="row rounded">
@@ -116,7 +118,7 @@
 						<div id="groupon_widget" class="rounded">
 						    <h1>Daily Deal in <span>chicago</span></h1>
 						    <div id="groupon_box" class="rounded">
-						      <h2><a href="">$15 for $30 Worth of Pub Grub and Drinks at Four Farthings</a></h2>
+						      <h2><a href="" class="groupon_widget_text_link">$15 for $30 Worth of Pub Grub and Drinks at Four Farthings</a></h2>
 						      <div id="left">
 						        <div id="price_tag_wrap">
 						          <div id="triangle">
@@ -126,41 +128,41 @@
 						        </div>
 						        <table id="breakdown">
 						          <tr>
-						            <th>value</th>
-						            <th>discount</th>
-						            <th>save</th>
+						            <th class="groupon_widget_text">value</th>
+						            <th class="groupon_widget_text">discount</th>
+						            <th class="groupon_widget_text">save</th>
 						          </tr>
 						          <tr>
-						            <td class="bold">$30</td>
-						            <td class="bold">50%</td>
-						            <td class="bold">$15</td>
+						            <td class="groupon_widget_text bold">$30</td>
+						            <td class="groupon_widget_text bold">50%</td>
+						            <td class="groupon_widget_text bold">$15</td>
 						          </tr>
 						        </table>
 						        <table id="number_bought" class="bold">
 						          <tr>
-						            <td id="number">3,243</td>
+						            <td class="groupon_widget_text" id="number">3,243</td>
 						          </tr>
 						          <tr>
-						            <td>bought</td>
+						            <td class="groupon_widget_text">bought</td>
 						          </tr>
 						        </table>
 						        <table id="time_left_label" style="display:none;">
 						          <tr colspan="4">
-						            <td>time left to buy</td>
+						            <td class="groupon_widget_text">time left to buy</td>
 						          </tr>
 						        </table>
 						        <table id="time_left" class="bold" style="display:none;">
 						          <tr>
-						            <td class="number">1</td>
-						            <td class="number">12</td>
-						            <td class="number">32</td>
-						            <td class="number">21</td>
+						            <td class="groupon_widget_text number">1</td>
+						            <td class="groupon_widget_text number">12</td>
+						            <td class="groupon_widget_text number">32</td>
+						            <td class="groupon_widget_text number">21</td>
 						          </tr>
 						          <tr>
-						            <td class="label">D</td>
-						            <td class="label">H</td>
-						            <td class="label">M</td>
-						            <td class="label">S</td>
+						            <td class="groupon_widget_text label">D</td>
+						            <td class="groupon_widget_text label">H</td>
+						            <td class="groupon_widget_text label">M</td>
+						            <td class="groupon_widget_text label">S</td>
 						          </tr>
 						        </table>
 						      </div>
@@ -174,7 +176,7 @@
 						    </div>
 
 						    <div id="footer">
-						      <a class="rounded" href="">Get this widget, get money!</a>
+						      <a class="rounded groupon_widget_text_link" href="">Get this widget, get money!</a>
 						    </div>
 
 						  </div>
