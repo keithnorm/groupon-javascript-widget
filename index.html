@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Get Groupdon, Get Money!</title>
+<link rel="stylesheet" href="css/skins.css" type="text/css" media="screen, projection, print" />
+<link rel="stylesheet" href="css/styles_widget.css" type="text/css" media="screen">
+  	<!--[if lte IE 6]>
+    <link rel="stylesheet" href="css/ie.css" type="text/css" media="screen, projection, print" />
+	<![endif]-->    
+	<!--[if IE 7]>
+    <link rel="stylesheet" href="css/ie7.css" type="text/css" media="screen, projection, print" />
+	<![endif]-->
+	<!--[if gte IE 8]>
+    <link rel="stylesheet" href="css/ie8.css" type="text/css" media="screen, projection, print" />
+	<![endif]-->
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/colorpicker.js"></script>
+    <script type="text/javascript" src="js/eye.js"></script>
+    <script type="text/javascript" src="js/utils.js"></script>
+    <script type="text/javascript" src="js/layout.js?ver=1.0.2"></script>
+	<script type="text/javascript" src="js/colorpicker.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('.colorpick').ColorPicker(
+				{
+					onChange:function(input, rgb, hex, c, d){
+						$(input).val(hex);
+					},
+					color: $(this).val()
+				});
+			console.log($('.colorpick'));
+		})
+	</script>
+</head>
+<body>
+	<div id="global-wrap">
+		<div id="main-wrap">
+			<div id="header-wrap" class="clearfix">
+				<h1 id="logo"><a href="http://www.grouponwidget.com" title="Get Groupdon, Get Money!">Get Groupdon, Get Money!</a></h1>
+				<ul id="nav">
+					<li class="current"><a href="index.html" title="Build your Widget"><img src="img/nav-build-your-widget.jpg" alt="Build your widget"></a></li>
+					<li><a href="contact.html" title="Contact"><img src="img/nav-contact.jpg" alt="Contact"></a></li>
+				</ul>
+			</div><!-- #header-wrap -->	
+			<div id="content-wrap" class="clearfix">
+				<div id="content-left">
+					<div id="appearance-wrap">
+						<h2>Appearance</h2>
+						<form>
+							<fieldset>
+								<div class="row">
+									<label for="link_color">link color&nbsp;&nbsp;<span>#<span></label>
+									<input class="colorpick" type="text" id="link_color" maxlength="6" value="000000"/>
+								</div>
+								<div class="row">
+									<label for="text_color">text color&nbsp;&nbsp;<span>#<span></label>
+									<input class="colorpick" type="text" id="text_color" maxlength="6" value="f9f9f9"/>
+								</div>
+								<div class="row">
+									<label for="header_footer_color">Header/Footer BG color&nbsp;&nbsp;<span>#<span></label>
+									<input class="colorpick" type="text" id="header_footer_color" maxlength="6" value="423490"/>
+								</div>
+								<div class="row">
+									<label for="title_color">title color&nbsp;&nbsp;<span>#<span></label>
+									<input class="colorpick" type="text" id="title_color" maxlength="6" value="423490"/>
+								</div>
+								<div class="row">
+									<label for="main_bg_color">main BG color&nbsp;&nbsp;<span>#<span></label>
+									<input class="colorpick" type="text" id="main_bg_color" maxlength="6" value="423490"/>
+								</div>
+								<div class="row">
+									<label for="get_it_color">GET IT! button color&nbsp;&nbsp;<span>#<span></label>
+									<input class="colorpick" type="text" id="get_it_color" maxlength="6" value="423490"/>
+								</div>
+								<div class="row">
+									<label for="price_tag_color">BG color&nbsp;&nbsp;<span>#<span></label>
+									<input class="colorpick" type="text" id="price_tag_color" maxlength="6" value="423490"/>
+								</div>
+								<div class="row rounded">
+									<label for="link-color">Rounded Corners?&nbsp;&nbsp;<span><span></label>
+									<div id="rounded-input">
+										<input type="checkbox" id="rounded" checked="checked"/>
+									</div>
+								</div>
+							</fieldset>
+						</form>
+					</div><!--appearance-wrap-->
+					<div id="city-selector-wrap" class="clearfix">
+						<h2>City Selector</h2>
+						<div class="row">
+							<label for="link-color">daily deal for&nbsp;&nbsp;</label>
+							<select>
+								<option disabled="disabled" selected="selected">-- Select a city --</option>
+								<option>Minneapolis / St Paul</option>
+								<option>Boston</option>
+								<option>Zebra</option>
+							</select>
+						</div>
+					</div><!--city-selector-wrap-->
+					<div id="refer-link-wrap" class="clearfix">
+						<h2>Referral Code</h2>
+						<div class="row">
+							<label for="get_it_color">http://www.groupon.com/r/&nbsp;</label>
+							<input type="text" id="referral_input" maxlength="6"/>
+						</div>
+						<div id="refer-link-directions">
+							<p>By entering your Groupon referral code you receive $10 every time someone makes their first purchase from your widget. The funds are automatically put in your Groupon account, so why not! Right?</p>
+							<p class="center"><a href="http://www.groupon.com/referral" title="Groupon Referral">Get my referral code!</a></p>
+						</div>
+					</div>
+				</div><!--content-left-->
+				<div id="content-right">
+					<div id="preview-top"></div>
+					<div id="preview-content">
+						<div id="groupon_widget" class="rounded">
+						    <h1>Daily Deal in <span>chicago</span></h1>
+						    <div id="groupon_box" class="rounded">
+						      <h2><a href="">$15 for $30 Worth of Pub Grub and Drinks at Four Farthings</a></h2>
+						      <div id="left">
+						        <div id="price_tag_wrap">
+						          <div id="triangle">
+						          	<div id="hole"><img src="img/hole.png"/></div>
+						          </div>
+						          <div id="price_tag">$15</div>
+						        </div>
+						        <table id="breakdown">
+						          <tr>
+						            <th>value</th>
+						            <th>discount</th>
+						            <th>save</th>
+						          </tr>
+						          <tr>
+						            <td class="bold">$30</td>
+						            <td class="bold">50%</td>
+						            <td class="bold">$15</td>
+						          </tr>
+						        </table>
+						        <table id="number_bought" class="bold">
+						          <tr>
+						            <td id="number">3,243</td>
+						          </tr>
+						          <tr>
+						            <td>bought</td>
+						          </tr>
+						        </table>
+						        <table id="time_left_label" style="display:none;">
+						          <tr colspan="4">
+						            <td>time left to buy</td>
+						          </tr>
+						        </table>
+						        <table id="time_left" class="bold" style="display:none;">
+						          <tr>
+						            <td class="number">1</td>
+						            <td class="number">12</td>
+						            <td class="number">32</td>
+						            <td class="number">21</td>
+						          </tr>
+						          <tr>
+						            <td class="label">D</td>
+						            <td class="label">H</td>
+						            <td class="label">M</td>
+						            <td class="label">S</td>
+						          </tr>
+						        </table>
+						      </div>
+
+						      <div id="right">
+						        <p></p>
+						        <div id="get_it" class="get_it_rounded">
+						          <a href="">GET IT!</a>
+						        </div>
+						      </div>
+						    </div>
+
+						    <div id="footer">
+						      <a class="rounded" href="">Get this widget, get money!</a>
+						    </div>
+
+						  </div>
+					</div>
+					<div id="preview-bottom"></div>
+					<div id="submit-code-wrap">
+						<a href="" title="generate code"><img src="img/gen-code.jpg" alt="Generate Code" /></a>
+					</div>
+					<div id="code-box">
+						<textarea></textarea>
+					</div>
+				</div><!-- content-right -->
+			</div><!--content-wrap-->
+		</div><!-- #main-wrap -->
+	</div><!-- #global-wrap -->
+
+</body>
+</html>

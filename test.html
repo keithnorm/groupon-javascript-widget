@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>index</title>
+	<meta name="generator" content="TextMate http://macromates.com/">
+	<meta name="author" content="Keith Norman and Allison Liechty">
+	<!-- Date: 2009-11-07 -->
+	<script type="text/javascript" charset="utf-8" src="groupon_widget.js"></script>
+	<script type="text/javascript">
+	  // $(function(){
+	  //       $.jsonp({
+	  //         url: "http://grouponwidgetapi.dev/api.php",
+	  //         data: {"call": "deals", "callback": "stuff"},
+	  //         callbackParameter: "callback",
+	  //         success: function(response){
+	  //           console.log(response);
+	  //         }
+	  //       });
+	  //     })
+	</script>
+</head>
+<body>
+  <script type="text/javascript">
+  new GRPN.Widget({
+    version: 2,
+    type: 'deal',
+    city: 'chicago',
+    theme: {
+      
+      shell: {
+        background: '#ff0000',
+        color: '#0000ff'
+      },
+      buttons: {
+        get_it_btn: {
+          background: '#565656'
+        },
+        price_tag: {
+          background: '#ff0000'
+        }
+      },
+      deal: {
+        background: '#fff',
+        color: '#',
+        link_color: '#0000ff'
+      },
+      rounded: false
+    },
+    referral_code: "uu23423"
+  }).render();
+  </script>
+  
+</body>
+</html>
