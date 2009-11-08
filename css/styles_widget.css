@@ -10,9 +10,14 @@
   padding: 10px;
 }
 
-#groupon_widget.rounded{
+#groupon_widget.rounded_on{
   -moz-border-radius: 8px;
   -webkit-border-radius: 8px; 
+}
+
+#groupon_widget.rounded_off{
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
 }
 
 #groupon_widget.get_it_rounded{
@@ -20,9 +25,14 @@
   -webkit-border-radius: 95px;
 }
 
-#groupon_widget .rounded{
+#groupon_widget .rounded_on{
   -moz-border-radius: 8px;
   -webkit-border-radius: 8px; 
+}
+
+#groupon_widget .rounded_off{
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
 }
 
 #groupon_widget .get_it_rounded{
