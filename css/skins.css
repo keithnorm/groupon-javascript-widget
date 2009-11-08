@@ -144,6 +144,12 @@ fieldset {
 	width:118px;
 	float:left;
 }
+#rounded-input input {
+	text-align:left;
+	width:20px;
+	margin:7px 0 0 2px;
+
+}
 #city-selector-wrap {
 	padding:10px 0;
 	border-bottom:1px solid #acaf9b;
