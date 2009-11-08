@@ -58,10 +58,10 @@ function update_price_tag(hex){
 }
 
 function get_triangle_border_color(){
-  console.log($("#triangle").css("borderColor"));
+  
 }
 
 function update_rounded(){
-  console.log("rounded corners checkbox clicked")
+  
   $("#groupon_widget").toggleClass("rounded_on");
 }

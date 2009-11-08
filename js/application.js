@@ -95,7 +95,6 @@ $(function() {
     }
     for (var prop in theme){
       if(theme[prop] == "" || theme[prop] == {} || isEmpty(theme[prop])){
-        console.log("deleting: " + theme[prop]);
         delete theme[prop];
       }
     }

@@ -346,7 +346,6 @@ String.prototype.template = function (o) {
                 GRPN.Widget.loadingStyleSheet = true;
                 var Z = document.createElement("link");
                 Z.href = b;
-                console.log(a);
                 Z.rel = "stylesheet";
                 Z.type = "text/css";
                 document.getElementsByTagName("head")[0].appendChild(Z);
@@ -437,7 +436,6 @@ String.prototype.template = function (o) {
                         className.add(this.widgetEl, "GRPN-widget")
                     }
                     M.loadStyleSheet(GROUPON_WIDGET_HOST + "widget.css", this.widgetEl)
-                    console.log(this.id);
                     this._ready = is.fn(options.ready) ? options.ready : function () {};
                     return this
                 },
@@ -467,7 +465,7 @@ String.prototype.template = function (o) {
                 setTheme: function (k, f) {
                     var i = this;
                     var g = " !important";
-                    console.log(this.theme);
+                    
                     var h = "#groupon_widget #get_it {background: " + this.theme.buttons.get_it_btn.background + ";}";
                     h += "#groupon_widget h1 {color:" + this.theme.header.color + ";}";
                     h += "#groupon_widget #price_tag {background: " + this.theme.buttons.price_tag_btn.background  + "} ";
@@ -513,9 +511,9 @@ String.prototype.template = function (o) {
                 removeEvents: function () {},
                 _formatDollars: function(obj, vals) {
                   vals.forEach(function(val){
-                    console.log(val);
+                    
                     obj[val] = ["$", parseInt(obj[val].replace("USD", "")).toString()].join("");
-                    console.log(obj[val]);
+                    
                   })
                 },
                 _addReferralCodeToLinks: function(deal){
@@ -553,14 +551,13 @@ String.prototype.template = function (o) {
                 },
                 _getWidgetHtml: function () {
                     var self = this;
-                    console.log(self.deal);
+                    
                     function containerClass() {
                       return "container_class";
                     }  
                       
                     function header() {
-                      console.log("this");
-                      console.log(self.city);
+                      
                        return "<h1>Daily Deal in <span style='text-transform: capitalize;'>" + self.city +"</span></h1>";
                     }
                     
