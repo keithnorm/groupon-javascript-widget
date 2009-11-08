@@ -20,6 +20,8 @@
     <script type="text/javascript" src="js/utils.js"></script>
     <script type="text/javascript" src="js/layout.js?ver=1.0.2"></script>
 	<script type="text/javascript" src="js/colorpicker.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/jquery.json.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/application.js"></script>
 	<script type="text/javascript">
 		$(function(){
 			$('.colorpick').ColorPicker(
@@ -44,57 +46,58 @@
 				</ul>
 			</div><!-- #header-wrap -->	
 			<div id="content-wrap" class="clearfix">
+			  <form id="widget_builder_form" method="GET" action="#">
 				<div id="content-left">
 					<div id="appearance-wrap">
 						<h2>Appearance</h2>
-						<form>
+						
 							<fieldset>
 								<div class="row">
 									<label for="link_color">link color&nbsp;&nbsp;<span>#<span></label>
-									<input class="colorpick" type="text" id="link_color" maxlength="6" value="000000"/>
+									<input name="theme[link_color]" class="colorpick" type="text" id="link_color" maxlength="6" value="0981b3"/>
 								</div>
 								<div class="row">
 									<label for="text_color">text color&nbsp;&nbsp;<span>#<span></label>
-									<input class="colorpick" type="text" id="text_color" maxlength="6" value="f9f9f9"/>
+									<input name="theme[color]" class="colorpick" type="text" id="text_color" maxlength="6" value="000000"/>
 								</div>
 								<div class="row">
 									<label for="header_footer_color">Header/Footer BG color&nbsp;&nbsp;<span>#<span></label>
-									<input class="colorpick" type="text" id="header_footer_color" maxlength="6" value="423490"/>
+									<input name="theme[shell_background]" class="colorpick" type="text" id="header_footer_color" maxlength="6" value="7fb93c"/>
 								</div>
 								<div class="row">
 									<label for="title_color">title color&nbsp;&nbsp;<span>#<span></label>
-									<input class="colorpick" type="text" id="title_color" maxlength="6" value="423490"/>
+									<input name="theme[header_color]" class="colorpick" type="text" id="title_color" maxlength="6" value="ffffff"/>
 								</div>
 								<div class="row">
 									<label for="main_bg_color">main BG color&nbsp;&nbsp;<span>#<span></label>
-									<input class="colorpick" type="text" id="main_bg_color" maxlength="6" value="423490"/>
+									<input name="theme[deal_background]" class="colorpick" type="text" id="main_bg_color" maxlength="6" value="ffffff"/>
 								</div>
 								<div class="row">
 									<label for="get_it_color">GET IT! button color&nbsp;&nbsp;<span>#<span></label>
-									<input class="colorpick" type="text" id="get_it_color" maxlength="6" value="423490"/>
+									<input name="theme[get_it_btn_background]" class="colorpick" type="text" id="get_it_color" maxlength="6" value="7fb93c"/>
 								</div>
 								<div class="row">
-									<label for="price_tag_color">BG color&nbsp;&nbsp;<span>#<span></label>
-									<input class="colorpick" type="text" id="price_tag_color" maxlength="6" value="423490"/>
+									<label for="price_tag_color"><span>#<span></label>
+									<input name="theme[price_tag_btn_background]" class="colorpick" type="text" id="price_tag_color" maxlength="6" value="67d6f2"/>
 								</div>
 								<div class="row rounded">
 									<label for="link-color">Rounded Corners?&nbsp;&nbsp;<span><span></label>
 									<div id="rounded-input">
-										<input type="checkbox" id="rounded" checked="checked"/>
+										<input name="theme[rounded]" type="checkbox" id="rounded" checked="checked"/>
 									</div>
 								</div>
 							</fieldset>
-						</form>
+						
 					</div><!--appearance-wrap-->
 					<div id="city-selector-wrap" class="clearfix">
 						<h2>City Selector</h2>
 						<div class="row">
 							<label for="link-color">daily deal for&nbsp;&nbsp;</label>
-							<select>
+							<select name="city">
 								<option disabled="disabled" selected="selected">-- Select a city --</option>
-								<option>Minneapolis / St Paul</option>
-								<option>Boston</option>
-								<option>Zebra</option>
+								<option value="minneapolis">Minneapolis / St Paul</option>
+								<option value="boston">Boston</option>
+								<option value="">Zebra</option>
 							</select>
 						</div>
 					</div><!--city-selector-wrap-->
@@ -102,7 +105,7 @@
 						<h2>Referral Code</h2>
 						<div class="row">
 							<label for="get_it_color">http://www.groupon.com/r/&nbsp;</label>
-							<input type="text" id="referral_input" maxlength="6"/>
+							<input name="referral_code" type="text" id="referral_input" maxlength="6"/>
 						</div>
 						<div id="refer-link-directions">
 							<p>By entering your Groupon referral code you receive $10 every time someone makes their first purchase from your widget. The funds are automatically put in your Groupon account, so why not! Right?</p>
@@ -172,7 +175,7 @@
 						        </div>
 						      </div>
 						    </div>
-
+               </form>
 						    <div id="footer">
 						      <a class="rounded" href="">Get this widget, get money!</a>
 						    </div>
@@ -181,10 +184,10 @@
 					</div>
 					<div id="preview-bottom"></div>
 					<div id="submit-code-wrap">
-						<a href="" title="generate code"><img src="img/gen-code.jpg" alt="Generate Code" /></a>
+					  <input type="image" src="img/gen-code.jpg" alt="Generate Code" />
 					</div>
 					<div id="code-box">
-						<textarea></textarea>
+						<textarea id="widget_embed_code"></textarea>
 					</div>
 				</div><!-- content-right -->
 			</div><!--content-wrap-->

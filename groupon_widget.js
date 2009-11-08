@@ -468,12 +468,12 @@ String.prototype.template = function (o) {
                     console.log(this.theme);
                     var h = "#groupon_widget #get_it {background: " + this.theme.buttons.get_it_btn.background + ";}";
                     h += "#groupon_widget h1 {color:" + this.theme.header.color + ";}";
-                    h += "#groupon_widget #price_tag {background: " + this.theme.buttons.price_tag.background  + "} ";
+                    h += "#groupon_widget #price_tag {background: " + this.theme.buttons.price_tag_btn.background  + "} ";
                     h += "#groupon_widget #groupon_box {background:" + this.theme.deal.background + "; color: " + this.theme.deal.color + ";}";
                     h += "#groupon_widget a {color: " + this.theme.deal.link_color + "}";
                     h += "#groupon_widget { background: " + this.theme.shell.background + "; color: " + this.theme.shell.color + ";}";
-                    h += "#groupon_widget #price_tag_wrap #triangle{border-right-color:" + this.theme.buttons.price_tag.background + "}";
-                    h += "#groupon_widget #price_tag_wrap #price_tag{background: " + this.theme.buttons.price_tag.background + "}";
+                    h += "#groupon_widget #price_tag_wrap #triangle{border-right-color:" + this.theme.buttons.price_tag_btn.background + "}";
+                    h += "#groupon_widget #price_tag_wrap #price_tag{background: " + this.theme.buttons.price_tag_btn.background + "}";
                     if (isIE.ie) {
                         h += "#groupon_widget #get_it {background: " + this.theme.buttons.get_it_btn.background + "}";
                     }
@@ -538,7 +538,7 @@ String.prototype.template = function (o) {
                           get_it_btn: {
                             background: "#7fb93c"
                           },
-                          price_tag: {
+                          price_tag_btn: {
                             background: "#67d6f2" 
                           }
                           

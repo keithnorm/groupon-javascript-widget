@@ -1,20 +1,16 @@
+#groupon_widget {
+  position:relative;
+  font-family: Helvetica, sans-serif;
+}
 #groupon_widget td{
   font-size: 12px;
   text-align: center;
 }
 
-body #groupon_widget {
-  font-family: Arial;
-  position: relative;
-}
-
-#groupon_widget #deal_image img {
-  width: 170px;
-}
-
 #groupon_widget .pad_10{
   padding: 10px;
 }
+
 
 #groupon_widget.rounded{
   -moz-border-radius: 8px;
@@ -40,10 +36,8 @@ body #groupon_widget {
   font-weight: bold;
 }
 
-#groupon_widget a {
-  color: #28A7DE;
-}
 #groupon_widget a:link, #groupon_widget a:visited, #groupon_widget a:hover, #groupon_widget a:active{
+  color: #28A7DE;
   text-decoration: none;
 }
 
@@ -54,17 +48,21 @@ body #groupon_widget {
 #groupon_widget{
   width: 296px;
   overflow: hidden;
-  background: #89B556;
+  background: #89B556 url(../img/rays.png) no-repeat left top;
   padding: 5px 2px 0 2px;
+  margin:auto;
 }
 
 #groupon_widget h1{
-  background: url("../images/logo.png") no-repeat 4px 0;
-  padding: 5px 0 10px 15px;
-  margin-bottom: 5px;
+  background: url("../img/logo.png") no-repeat 4px center;
+  padding: 9px 0 5px 85px;
+  margin:0 0 5px 7px;
   color: #FFF;
-  text-align: center;
   font-size: 14px;
+  min-height: 25px;
+}
+#groupon_widget h1 span{
+  text-transform:capitalize;
 }
 
 #groupon_box{
@@ -77,7 +75,7 @@ body #groupon_widget {
 
 #groupon_box h2{
   padding: 0 0 0 10px;
-  margin-bottom: 5px;
+  margin: 0 0 5px 0;
   font-size: 14px;
 }
 
@@ -94,15 +92,16 @@ body #groupon_widget {
   width: 170px;
   padding-left: 3px;
 }
-
+  #groupon_widget #deal_image img {
+    width: 170px;
+  }
 #groupon_widget #right p{
-  background: #272727;
   width: 98%;
-  height: 105px;
+  height: 104px;
   color: #555;
   text-align: center;
-  padding-top: 15px;
-  margin: 0 0 10px 0;
+  padding: 0;
+  margin: 0 0 5px 0;
 }
 
 #groupon_widget #price_tag_wrap{
@@ -117,13 +116,27 @@ body #groupon_widget {
   border-bottom: 16px solid #fff;
   border-left: 1px solid #fff;
   border-right: 11px solid #67D6F2;
+  position:relative;
+}
+
+#groupon_widget #price_tag_wrap #triangle #hole{
+  width:7px;
+  height:7px;
+  position:absolute;
+  top:-3px;
+  left:7px;
 }
 
 #groupon_widget #price_tag_wrap #price_tag{
   float: left;
   background: #67D6F2;
-  width: 102px;
+  width: 77px;
   height: 33px;
+  color: #fff;
+  font-weight:700;
+  font-size:24px;
+  line-height:37px;
+  padding-left:25px;
 }
 
 #groupon_widget table{
@@ -137,8 +150,12 @@ body #groupon_widget {
 
 #groupon_widget table#number_bought{
   width: 100%;
+  padding-top:10px;
 }
-
+#groupon_widget #breakdown th{
+  font-size:10px;
+  font-weight:normal;
+}
 #groupon_widget table#number_bought tr td#number{
   font-size: 24px;
 }
@@ -148,8 +165,20 @@ body #groupon_widget {
   text-align: center;
 }
 
+#groupon_widget table#time_left_label{
+  padding-top:10px;
+}
 #groupon_widget table#time_left tr td{
   width: 25%;
+  font-size:18px;
+}
+#groupon_widget table#time_left tr td.number{
+  width: 25%;
+}
+#groupon_widget table#time_left tr td.label{
+  width: 25%;
+  font-size:10px;
+  font-weight:normal;
 }
 
 #groupon_widget #footer a{
@@ -170,7 +199,7 @@ body #groupon_widget {
 
 #groupon_widget #get_it a{
   position: absolute;
-  background: url("../images/get_it_overlay.png") no-repeat top left;
+  background: url("../img/get_it_overlay.png") no-repeat top left;
   top: -1px;
   left: 0;
   width: 100%;
@@ -178,7 +207,7 @@ body #groupon_widget {
   text-align: center;
   font-size: 24px;
   color: #FFF;
-  padding-top: 19px;
+  padding-top: 23px;
 }
 
 #groupon_widget #get_it a:hover{
