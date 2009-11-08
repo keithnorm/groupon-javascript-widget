@@ -568,7 +568,7 @@ String.prototype.template = function (o) {
                       var roundedClass = self.theme.rounded ? 'rounded' : '';
                       var html = '<div id="groupon_box" class=" ' + roundedClass + '">';
                       html += '<h2><a href="{deal_url}">{title}</a></h2>';
-                      html += '<div id="left"><div id="price_tag_wrap"><div id="triangle"></div>';
+                      html += '<div id="left"><div id="price_tag_wrap"><div id="triangle"><div id="hole"><img src="http://grouponwidget.com/img/hole.png"/></div></div>';
                       html += '<div id="price_tag">{price}</div></div><table id="breakdown">';
                       html += '<tr><th>value</th><th>discount</th><th>save</th></tr>';
                       html += '<tr><td class="bold">{value}</td><td class="bold">{discount_percent}%</td><td class="bold">{discount_amount}</td></tr>';

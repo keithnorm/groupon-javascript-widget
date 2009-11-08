@@ -95,6 +95,9 @@
   #groupon_widget #deal_image img {
     width: 170px;
   }
+  #groupon_widget a img {
+    border: none;
+  }
 #groupon_widget #right p{
   width: 98%;
   height: 104px;
@@ -183,7 +186,7 @@
 
 #groupon_widget #footer a{
   float: right;
-  background: #DEEDCC;
+  background: #FFF;
   margin: 0 8px 5px 0;
   padding: 2px 5px;
   font-size: 12px;
