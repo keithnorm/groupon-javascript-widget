@@ -111,7 +111,7 @@ $(function() {
     opts.referral_code = formParams["referral_code"];
     opts.city = formParams["city"];
     opts.theme = theme;
-    opts.rounded = opts.theme.rounded && opts.theme.rounded == "off" ? false : true;
+    opts.theme.rounded = opts.theme.rounded && opts.theme.rounded == "off" ? false : true;
     var widgetEmbedCode = "<script type='text/javascript' src='http://grouponwidget.dev/groupon_widget.js'></script>";
     widgetEmbedCode += "<script type='text/javascript'>"
     widgetEmbedCode += "new GRPN.Widget(";

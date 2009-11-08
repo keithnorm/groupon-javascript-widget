@@ -205,14 +205,15 @@
 				var cal = $('#' + $(this).data('colorpickerId'));
 				cal.data('colorpicker').onBeforeShow.apply(this, [cal.get(0)]);
 				var pos = $(this).offset();
+				console.log($(cal).width());
 				var viewPort = getViewport();
 				var top = pos.top + this.offsetHeight;
 				var left = pos.left;
 				if (top + 176 > viewPort.t + viewPort.h) {
 					top -= this.offsetHeight + 176;
 				}
-				if (left + 356 > viewPort.l + viewPort.w) {
-					left -= 356;
+				if ((left + 356 > viewPort.l + viewPort.w) || true) {
+					left -= (356 - $(this).outerWidth());
 				}
 				cal.css({left: left + 'px', top: top + 'px'});
 				if (cal.data('colorpicker').onShow.apply(this, [cal.get(0)]) != false) {
