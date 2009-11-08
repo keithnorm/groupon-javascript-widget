@@ -20,12 +20,16 @@
     <script type="text/javascript" src="js/utils.js"></script>
     <script type="text/javascript" src="js/layout.js?ver=1.0.2"></script>
 	<script type="text/javascript" src="js/colorpicker.js"></script>
+  <script type="text/javascript" src="js/preview.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/jquery.json.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/application.js"></script>
 	<script type="text/javascript">
 		$(function(){
 			$('.colorpick').ColorPicker(
 				{
 					onChange:function(input, rgb, hex, c, d){
 						$(input).val(hex);
+						preview($(input).attr("id"), hex);
 					},
 					color: $(this).val()
 				});
@@ -44,53 +48,56 @@
 				</ul>
 			</div><!-- #header-wrap -->	
 			<div id="content-wrap" class="clearfix">
+			  <form id="widget_builder_form" method="GET" action="#">
 				<div id="content-left">
 					<div id="appearance-wrap">
 						<h2>Appearance</h2>
-						<form>
+						
 							<fieldset>
 								<div class="row">
+
 									<label for="link_color">Link color&nbsp;&nbsp;<span>#<span></label>
-									<input class="colorpick" type="text" id="link_color" maxlength="6" value="000000"/>
+									<input name="theme[link_color]" class="colorpick" type="text" id="link_color" maxlength="6" value="0981b3"/>
 								</div>
 								<div class="row">
 									<label for="text_color">Text color&nbsp;&nbsp;<span>#<span></label>
-									<input class="colorpick" type="text" id="text_color" maxlength="6" value="f9f9f9"/>
+									<input name="theme[color]" class="colorpick" type="text" id="text_color" maxlength="6" value="000000"/>
 								</div>
 								<div class="row">
 									<label for="header_footer_color">Header/Footer background color&nbsp;&nbsp;<span>#<span></label>
-									<input class="colorpick" type="text" id="header_footer_color" maxlength="6" value="423490"/>
+									<input name="theme[shell_background]" class="colorpick" type="text" id="header_footer_color" maxlength="6" value="7fb93c"/>
 								</div>
 								<div class="row">
 									<label for="title_color">Title color&nbsp;&nbsp;<span>#<span></label>
-									<input class="colorpick" type="text" id="title_color" maxlength="6" value="423490"/>
+									<input name="theme[header_color]" class="colorpick" type="text" id="title_color" maxlength="6" value="ffffff"/>
 								</div>
 								<div class="row">
-									<label for="main_bg_color">Deal background color&nbsp;&nbsp;<span>#<span></label>
-									<input class="colorpick" type="text" id="main_bg_color" maxlength="6" value="423490"/>
+									<label for="main_bg_color">Main background color&nbsp;&nbsp;<span>#<span></label>
+									<input name="theme[deal_background]" class="colorpick" type="text" id="main_bg_color" maxlength="6" value="ffffff"/>
 								</div>
 								<div class="row">
 									<label for="get_it_color">"GET IT!" button color&nbsp;&nbsp;<span>#<span></label>
-									<input class="colorpick" type="text" id="get_it_color" maxlength="6" value="423490"/>
+									<input name="theme[get_it_btn_background]" class="colorpick" type="text" id="get_it_color" maxlength="6" value="7fb93c"/>
 								</div>
 								<div class="row">
-									<label for="price_tag_color">Price tag color&nbsp;&nbsp;<span>#<span></label>
-									<input class="colorpick" type="text" id="price_tag_color" maxlength="6" value="423490"/>
+									<label for="price_tag_color">Price tag color<span>#<span></label>
+									<input name="theme[price_tag_btn_background]" class="colorpick" type="text" id="price_tag_color" maxlength="6" value="67d6f2"/>
+>>>>>>> 754976d1137c258d1424809468d0ad846a07f2b6
 								</div>
 								<div class="row rounded">
 									<label for="link-color">Rounded Corners?&nbsp;&nbsp;<span><span></label>
 									<div id="rounded-input">
-										<input type="checkbox" id="rounded" checked="checked"/>
+										<input name="theme[rounded]" type="checkbox" id="rounded" checked="checked"/>
 									</div>
 								</div>
 							</fieldset>
-						</form>
+						
 					</div><!--appearance-wrap-->
 					<div id="city-selector-wrap" class="clearfix">
 						<h2>City Selector</h2>
 						<div class="row">
 							<label for="link-color">daily deal for&nbsp;&nbsp;</label>
-							<select>
+							<select name="city">
 								<option disabled="disabled" selected="selected">-- Select a city --</option>
 								<option value="austin">Austin</option>
 								<option value="baltimore">Baltimore</option>
@@ -136,7 +143,7 @@
 						<h2>Referral Code</h2>
 						<div class="row">
 							<label for="get_it_color">http://www.groupon.com/r/&nbsp;</label>
-							<input type="text" id="referral_input" maxlength="6"/>
+							<input name="referral_code" type="text" id="referral_input" maxlength="6"/>
 						</div>
 						<div id="refer-link-directions">
 							<p>By entering your Groupon referral code you receive $10 every time someone makes their first purchase from your widget. The funds are automatically put in your Groupon account, so why not! Right?</p>
@@ -150,7 +157,7 @@
 						<div id="groupon_widget" class="rounded">
 						    <h1>Daily Deal in <span>chicago</span></h1>
 						    <div id="groupon_box" class="rounded">
-						      <h2><a href="">$15 for $30 Worth of Pub Grub and Drinks at Four Farthings</a></h2>
+						      <h2><a href="" class="groupon_widget_text_link">$15 for $30 Worth of Pub Grub and Drinks at Four Farthings</a></h2>
 						      <div id="left">
 						        <div id="price_tag_wrap">
 						          <div id="triangle">
@@ -160,41 +167,41 @@
 						        </div>
 						        <table id="breakdown">
 						          <tr>
-						            <th>value</th>
-						            <th>discount</th>
-						            <th>save</th>
+						            <th class="groupon_widget_text">value</th>
+						            <th class="groupon_widget_text">discount</th>
+						            <th class="groupon_widget_text">save</th>
 						          </tr>
 						          <tr>
-						            <td class="bold">$30</td>
-						            <td class="bold">50%</td>
-						            <td class="bold">$15</td>
+						            <td class="groupon_widget_text bold">$30</td>
+						            <td class="groupon_widget_text bold">50%</td>
+						            <td class="groupon_widget_text bold">$15</td>
 						          </tr>
 						        </table>
 						        <table id="number_bought" class="bold">
 						          <tr>
-						            <td id="number">3,243</td>
+						            <td class="groupon_widget_text" id="number">3,243</td>
 						          </tr>
 						          <tr>
-						            <td>bought</td>
+						            <td class="groupon_widget_text">bought</td>
 						          </tr>
 						        </table>
 						        <table id="time_left_label" style="display:none;">
 						          <tr colspan="4">
-						            <td>time left to buy</td>
+						            <td class="groupon_widget_text">time left to buy</td>
 						          </tr>
 						        </table>
 						        <table id="time_left" class="bold" style="display:none;">
 						          <tr>
-						            <td class="number">1</td>
-						            <td class="number">12</td>
-						            <td class="number">32</td>
-						            <td class="number">21</td>
+						            <td class="groupon_widget_text number">1</td>
+						            <td class="groupon_widget_text number">12</td>
+						            <td class="groupon_widget_text number">32</td>
+						            <td class="groupon_widget_text number">21</td>
 						          </tr>
 						          <tr>
-						            <td class="label">D</td>
-						            <td class="label">H</td>
-						            <td class="label">M</td>
-						            <td class="label">S</td>
+						            <td class="groupon_widget_text label">D</td>
+						            <td class="groupon_widget_text label">H</td>
+						            <td class="groupon_widget_text label">M</td>
+						            <td class="groupon_widget_text label">S</td>
 						          </tr>
 						        </table>
 						      </div>
@@ -206,19 +213,19 @@
 						        </div>
 						      </div>
 						    </div>
-
+               </form>
 						    <div id="footer">
-						      <a class="rounded" href="">Get this widget, get money!</a>
+						      <a class="rounded groupon_widget_text_link" href="">Get this widget, get money!</a>
 						    </div>
 
 						  </div>
 					</div>
 					<div id="preview-bottom"></div>
 					<div id="submit-code-wrap">
-						<a href="" title="generate code"><img src="img/gen-code.jpg" alt="Generate Code" /></a>
+					  <input type="image" src="img/gen-code.jpg" alt="Generate Code" />
 					</div>
 					<div id="code-box">
-						<textarea></textarea>
+						<textarea id="widget_embed_code"></textarea>
 					</div>
 				</div><!-- content-right -->
 			</div><!--content-wrap-->
