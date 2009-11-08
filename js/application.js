@@ -146,3 +146,9 @@ $.fn.serializeObject = function()
    });
    return o;
 };
+
+$(document).ready(function () {
+  $("#widget_embed_code").click(function(){
+    $(this).select();
+  })
+})

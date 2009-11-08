@@ -215,7 +215,10 @@ fieldset {
 	-moz-border-radius: 7px;
 	-webkit-border-radius: 7px;
 	padding:10px;
-} 
+}
+#rounded-input{
+  margin-top: 8px;
+}
 #referral_input {
 	background-image:none;
 }
