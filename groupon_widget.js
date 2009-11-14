@@ -1,10 +1,9 @@
 /**
- * Twitter - http://www.twitter.com
- * Copyright (C) 2009 Twitter
- * Author: Dustin Diaz (dustin@twitter.com)
+ * Groupon - http://www.groupon.com
  *
- * V 2.0.1 Twitter search/profile/faves/list widget
- * http://twitter.com/widgets
+ * V 1.0 Groupon Widget
+ * http://grouponwidget.com
+ * Authors: Matt Loseke, Steven Walker, Keith Norman
  */
 GRPN = window.GRPN || {};
 API_PROXY_HOST = "http://grouponwidget.com/service/api.php";
