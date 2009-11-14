@@ -111,7 +111,7 @@ $(function() {
     opts.city = formParams["city"];
     opts.theme = theme;
     opts.theme.rounded = opts.theme.rounded && opts.theme.rounded == "off" ? false : true;
-    var widgetEmbedCode = "<script type='text/javascript' src='http://grouponwidget.dev/groupon_widget.js'></script>";
+    var widgetEmbedCode = "<script type='text/javascript' src='http://grouponwidget.com/groupon_widget.js'></script>";
     widgetEmbedCode += "<script type='text/javascript'>"
     widgetEmbedCode += "new GRPN.Widget(";
     widgetEmbedCode += $.toJSON(opts);

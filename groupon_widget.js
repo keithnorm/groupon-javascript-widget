@@ -7,8 +7,8 @@
  * http://twitter.com/widgets
  */
 GRPN = window.GRPN || {};
-API_PROXY_HOST = "http://grouponwidgetapi.dev/api.php";
-GROUPON_WIDGET_HOST = "http://grouponwidget.dev/";
+API_PROXY_HOST = "http://grouponwidget.com/service/api.php";
+GROUPON_WIDGET_HOST = "http://grouponwidget.com/";
 
 if (!Array.forEach) {
     Array.prototype.forEach = function (D, E) {
@@ -407,7 +407,7 @@ String.prototype.template = function (o) {
                     this._widgetNumber = ++GRPN.Widget.WIDGET_NUMBER;
                     GRPN.Widget["receiveCallback_" + this._widgetNumber] = function (response) {
                       if(response.deals.length > 0){
-                        self.deal = response.deals[0].deal;
+                        self.deal = response.deals[0];
                         self._formatDollars(self.deal, ["discount_amount", "price", "value"]);
                         self._addReferralCodeToLinks(self.deal);
                         self._normalizeUrlParams(self.deal);
