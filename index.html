@@ -72,10 +72,6 @@
 									<input name="theme[header_color]" class="colorpick" type="text" id="title_color" maxlength="6" value="ffffff"/>
 								</div>
 								<div class="row">
-									<label for="main_bg_color">Main background color&nbsp;&nbsp;<span>#<span></label>
-									<input name="theme[deal_background]" class="colorpick" type="text" id="main_bg_color" maxlength="6" value="ffffff"/>
-								</div>
-								<div class="row">
 									<label for="get_it_color">"GET IT!" button color&nbsp;&nbsp;<span>#<span></label>
 									<input name="theme[get_it_btn_background]" class="colorpick" type="text" id="get_it_color" maxlength="6" value="7fb93c"/>
 								</div>
@@ -152,7 +148,7 @@
 						          </div>
 						          <div id="price_tag">$15</div>
 						        </div>
-						        <table id="breakdown">
+						        <table id="breakdown" cellpadding="0" cellspacing="0">
 						          <tr>
 						            <th class="groupon_widget_text">value</th>
 						            <th class="groupon_widget_text">discount</th>
@@ -164,20 +160,12 @@
 						            <td class="groupon_widget_text bold">$15</td>
 						          </tr>
 						        </table>
-						        <table id="number_bought" class="bold">
+						        <table id="time_left_label" cellpadding="0" cellspacing="0">
 						          <tr>
-						            <td class="groupon_widget_text" id="number">573</td>
-						          </tr>
-						          <tr>
-						            <td class="groupon_widget_text">bought</td>
-						          </tr>
-						        </table>
-						        <table id="time_left_label" style="display:none;">
-						          <tr colspan="4">
 						            <td class="groupon_widget_text">time left to buy</td>
 						          </tr>
 						        </table>
-						        <table id="time_left" class="bold" style="display:none;">
+						        <table id="time_left" class="bold" cellpadding="0" cellspacing="0" valign="top" >
 						          <tr>
 						            <td class="groupon_widget_text number">1</td>
 						            <td class="groupon_widget_text number">12</td>
@@ -191,6 +179,15 @@
 						            <td class="groupon_widget_text label">S</td>
 						          </tr>
 						        </table>
+						        <table id="number_bought" class="bold" cellpadding="0" cellspacing="0">
+						          <tr>
+						            <td class="groupon_widget_text" id="number">573</td>
+						          </tr>
+						          <tr>
+						            <td class="groupon_widget_text">bought</td>
+						          </tr>
+						        </table>
+						        
 						      </div>
 
 						      <div id="right">

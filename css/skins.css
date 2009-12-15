@@ -110,12 +110,14 @@ fieldset {
 	border-bottom:1px solid #acaf9b;
 }
 .row {
-	float:right;
 	margin-bottom:2px;
+	height:35px;
 }
 .row label{
 	float:left;
 	line-height:33px;
+	width:240px;
+	text-align:right;
 }
 .row label span{
 	color:#b4b79f;
@@ -162,6 +164,7 @@ fieldset {
 #city-selector-wrap .row label{
 	float:left;
 	line-height:33px;
+	width:170px;
 }
 .colorpick {
 	cursor: pointer;
@@ -198,6 +201,7 @@ fieldset {
 #preview-top {
 	background:url(../img/preview-top.jpg) no-repeat;
 	height:6px;
+	overflow: hidden;
 }
 #preview-content {
 	background:url(../img/preview-run.jpg) repeat-y;

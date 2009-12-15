@@ -1,5 +1,6 @@
 #groupon_widget {
   position:relative;
+  
 }
 #groupon_widget td{
   font-size: 12px;
@@ -142,18 +143,20 @@
 
 #groupon_widget table#breakdown tr td{
   width: 33%;
+  line-height:13px;
 }
 
 #groupon_widget table#number_bought{
   width: 100%;
-  padding-top:10px;
+  padding:15px 0;
 }
 #groupon_widget #breakdown th{
   font-size:10px;
   font-weight:normal;
 }
 #groupon_widget table#number_bought tr td#number{
-  font-size: 24px;
+  font-size: 30px;
+  line-height:24px;
 }
 
 #groupon_widget table#time_left th td{
@@ -162,14 +165,17 @@
 }
 
 #groupon_widget table#time_left_label{
-  padding-top:10px;
+  margin:5px 0 0 0;
+  height:15px;
 }
 #groupon_widget table#time_left tr td{
   width: 25%;
   font-size:18px;
+  line-height:12px;
 }
 #groupon_widget table#time_left tr td.number{
   width: 25%;
+  line-height:18px;
 }
 #groupon_widget table#time_left tr td.label{
   width: 25%;

@@ -569,7 +569,7 @@ String.prototype.template = function (o) {
                       html += '<tr><th>value</th><th>discount</th><th>save</th></tr>';
                       html += '<tr><td class="bold">{value}</td><td class="bold">{discount_percent}%</td><td class="bold">{discount_amount}</td></tr>';
                       html += '</table>';
-                      html += '<table id="number_bought" class="bold"><tr><td id="number">{quantity_sold}</td></tr>';
+                      html += '<table cellspacing="0" cellpadding="0" id="number_bought" class="bold"><tr><td id="number">{quantity_sold}</td></tr>';
                       html += '<tr><td>bought</td></tr></table>';
                       //html += '<table><tr colspan="4"><td>time left to buy</td></tr></table>';
                       html += '</div><div id="right"><p id="deal_image"><a href="{deal_url}"><img src="{large_image_url}" /></a></p><div id="get_it" class="get_it_rounded">';
