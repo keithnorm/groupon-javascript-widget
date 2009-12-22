@@ -23,17 +23,21 @@
   <script type="text/javascript" src="js/preview.js"></script>
 	<script type="text/javascript" charset="utf-8" src="js/jquery.json.js"></script>
 	<script type="text/javascript" charset="utf-8" src="js/application.js"></script>
+	<script type="text/javascript" charset="utf-8" src="groupon_widget.js"></script>
 	<script type="text/javascript">
+	var currentWidget;
 		$(function(){
 			$('.colorpick').ColorPicker(
 				{
 					onChange:function(input, rgb, hex, c, d){
 						$(input).val(hex);
-						preview($(input).attr("id"), hex);
+						grouponUpdatePreview();
 					},
 					color: $(this).val()
 				});
-			console.log($('.colorpick'));
+				var opts = getWidgetOpts();
+        opts.id = "groupon_widget";
+        currentWidget = new GRPN.Widget(opts).render();
 		})
 	</script>
 </head>
@@ -92,7 +96,7 @@
 						<h2>City Selector</h2>
 						<div class="row">
 							<label for="link-color">daily deal for&nbsp;&nbsp;</label>
-							<select name="city">
+							<select name="city" id="city_select">
 								<option disabled="disabled" selected="selected">-- Select a city --</option>
 								<option value="austin">Austin</option>
 								<option value="baltimore">Baltimore</option>

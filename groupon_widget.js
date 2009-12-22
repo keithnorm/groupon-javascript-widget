@@ -66,9 +66,83 @@ String.prototype.template = function (o) {
         return !!B.style.webkitTransitionProperty
     } ();
     
+    
+    GRPN.countdown = function (opts) {
+        this.init(opts)
+        return this;
+    };
+    GRPN.countdown.prototype = {
+      init: function(opts) {
+        this.targetTime = opts.targetDate;
+        this.periods = ["days", "hours", "minutes", "seconds"];
+        this.lengths = ["86400","3600","60","1"];
+        this.timer = {};
+        this.domContainer = 'groupon_widget';
+        this.dom = {
+          days: 'grpn_days_remaining',
+          hours: 'grpn_hours_remaining',
+          minutes: 'grpn_minutes_remaining',
+          seconds: 'grpn_seconds_remaining'
+        }
+        var self = this;
+        window.onunload = function() {
+          self.destroy();
+        }
+        return self;
+      },
+
+      tick: function(){
+        //adjust local time to utc
+        var now = new Date().getTime() + (new Date().getTimezoneOffset() * 60 * 1000);
+        var difference = (this.targetTime - now)/1000;
+        var time_hash = {};
+        for(var j = 0; j < this.lengths.length; j++) {
+          if(difference >= this.lengths[j]){
+            time_hash[this.periods[j]] = Math.floor(difference / this.lengths[j]);
+            difference = (difference % this.lengths[j]);
+          }
+          else{
+            time_hash[this.periods[j]] = 0;
+          }
+        }
+        this.update(time_hash);
+        return time_hash;
+      },
+
+      start: function() {
+        var self = this;
+        this.timer = setInterval(function(){ self.tick(); }, 1000);
+        return self;
+      },
+
+      stop: function() {
+        clearInterval(this.timer);
+        return self;
+      },
+
+      update: function(time_hash) {
+        var $ = this.$;
+        $(this.dom.days).innerHTML = time_hash.days;
+        $(this.dom.hours).innerHTML = time_hash.hours;
+        $(this.dom.minutes).innerHTML = time_hash.minutes;
+        $(this.dom.seconds).innerHTML = time_hash.seconds;
+        return this;
+      },
+
+      destroy: function() {
+        clearInterval(this.timer);
+        this.targetTime = null;
+      },
+
+      $: function(id){
+        return document.getElementById(id);
+      }
+    };
+    
     GRPN.Widget = function (B) {
         this.init(B)
     };
+    
     (function () {
         var M = {};
         var Y = {};
@@ -258,6 +332,12 @@ String.prototype.template = function (o) {
                 return false
             }
         };
+        
+        var strToTime = function(date){
+          return Date.parse(date.replace(/-/g, '/').replace(/Z$/, "").split("T").join(" "));
+          
+        }
+        
         var dateToWords = function (f) {
             var h = new Date();
             var d = new Date(f);
@@ -413,6 +493,7 @@ String.prototype.template = function (o) {
                       }
                       self.status = response.status
                       self.renderHTML();
+                      self.countDown = new GRPN.countdown({targetDate: strToTime(self.deal.end_date)}).start();
                     };
                     this._cb = "GRPN.Widget.receiveCallback_" + this._widgetNumber;
                     this.opts = options;
@@ -426,6 +507,8 @@ String.prototype.template = function (o) {
                     this._setUrl();
                     this.deal = {};
                     this.theme = Extend(options.theme || {}, this._getDefaultTheme());
+                    //buttons needs extended too
+                    this.theme.buttons = Extend(this.theme.buttons, this._getDefaultTheme().buttons);
                     if (!options.id) {
                         var roundedClass = this.theme.rounded ? 'rounded' : '';
                         document.write('<div id="groupon_widget" class="' + roundedClass + '">');
@@ -488,6 +571,7 @@ String.prototype.template = function (o) {
                 
                 render: function() {
                   this._loadDeal();
+                  return this;
                 },
                 
                 renderHTML: function () {
@@ -499,7 +583,6 @@ String.prototype.template = function (o) {
                         50);
                         return this
                     }
-                    
                     this.setTheme(this.theme);
                     this.widgetEl.innerHTML = this._getWidgetHtml();
                     
@@ -569,9 +652,24 @@ String.prototype.template = function (o) {
                       html += '<tr><th>value</th><th>discount</th><th>save</th></tr>';
                       html += '<tr><td class="bold">{value}</td><td class="bold">{discount_percent}%</td><td class="bold">{discount_amount}</td></tr>';
                       html += '</table>';
+                      html += '<table id="time_left_label" cellpadding="0" cellspacing="0">';
+  						        html += '<tr><td class="groupon_widget_text">time left to buy</td></tr>';
+  						        html += '</table>';
+                      html += '<table id="time_left" class="bold" cellpadding="0" cellspacing="0" valign="top" >';
+  						        html += '<tr>';
+  						        html += '<td class="groupon_widget_text number" id="grpn_days_remaining">1</td>';
+  						        html += '<td class="groupon_widget_text number" id="grpn_hours_remaining">12</td>';
+  						        html += '<td class="groupon_widget_text number" id="grpn_minutes_remaining">32</td>';
+  						        html += '<td class="groupon_widget_text number" id="grpn_seconds_remaining">21</td>';
+  						        html += '</tr>';
+  						        html += '<tr>';
+  						        html += '<td class="groupon_widget_text label">D</td>';
+  						        html += '<td class="groupon_widget_text label">H</td>';
+  						        html += '<td class="groupon_widget_text label">M</td>';
+  						        html += '<td class="groupon_widget_text label">S</td>';
+  						        html += '</tr></table>';
                       html += '<table cellspacing="0" cellpadding="0" id="number_bought" class="bold"><tr><td id="number">{quantity_sold}</td></tr>';
                       html += '<tr><td>bought</td></tr></table>';
-                      //html += '<table><tr colspan="4"><td>time left to buy</td></tr></table>';
                       html += '</div><div id="right"><p id="deal_image"><a href="{deal_url}"><img src="{large_image_url}" /></a></p><div id="get_it" class="get_it_rounded">';
                       html += '<a href="{buy_url}">GET IT!</a></div></div></div>';
                       return html;
@@ -593,6 +691,11 @@ String.prototype.template = function (o) {
                   GRPN.Widget.jsonP(self.url, function (response) {
                       this.scriptElement = response;
                   })
+                },
+                
+                stop: function() {
+                  this.countDown.destroy();
+                  this.countDown.targetDate = null;
                 },
                 
                 clear: function () {
