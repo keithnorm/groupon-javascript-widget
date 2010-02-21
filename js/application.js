@@ -21,6 +21,12 @@ var defaultTheme ={
   }
 }
 
+function populateDivisionList(json) {
+  $.each(json.query.results.json.divisions, function(i, division){
+    $("#city_select").append($("<option value='" + division.id + "'>" + division.name + "</option>"))
+  })
+} 
+
 function mapToDefault(prop){
   switch(prop){
     case "theme[rounded]" :
@@ -108,7 +114,7 @@ function getWidgetOpts(json) {
   var theme = writeThemeParams(formParams);
   var opts = {};
   opts.referral_code = formParams["referral_code"];
-  opts.city = formParams["city"].match(/select a city/i) ? "chicago" : formParams["city"];
+  opts.city = formParams["city"].match(/select a city/i) ? "" : formParams["city"];
   opts.theme = theme;
   opts.theme.rounded = opts.theme.rounded && opts.theme.rounded == "off" ? false : true;
   return json ? $.toJSON(opts) : opts;

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Get Groupdon, Get Money!</title>
 <link rel="stylesheet" href="css/skins.css" type="text/css" media="screen, projection, print" />
-<link rel="stylesheet" href="css/styles_widget.css" type="text/css" media="screen">
+<link rel="stylesheet" href="widget.css" type="text/css" media="screen">
   	<!--[if lte IE 6]>
     <link rel="stylesheet" href="css/ie.css" type="text/css" media="screen, projection, print" />
 	<![endif]-->    
@@ -16,12 +16,10 @@
 	<![endif]-->
 	<script type="text/javascript" src="js/jquery.js"></script>
 	<script type="text/javascript" src="js/colorpicker.js"></script>
-    <script type="text/javascript" src="js/eye.js"></script>
-    <script type="text/javascript" src="js/utils.js"></script>
-    <script type="text/javascript" src="js/layout.js?ver=1.0.2"></script>
 	<script type="text/javascript" src="js/colorpicker.js"></script>
   <script type="text/javascript" src="js/preview.js"></script>
 	<script type="text/javascript" charset="utf-8" src="js/jquery.json.js"></script>
+	<script language="JavaScript" src="http://j.maxmind.com/app/geoip.js"></script>
 	<script type="text/javascript" charset="utf-8" src="js/application.js"></script>
 	<script type="text/javascript" charset="utf-8" src="groupon_widget.js"></script>
 	<script type="text/javascript">
@@ -38,6 +36,7 @@
 				var opts = getWidgetOpts();
         opts.id = "groupon_widget";
         currentWidget = new GRPN.Widget(opts).render();
+        $.getScript("http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20json%20where%20url%20%3D%20%22http%3A%2F%2Fgroupon.com%2Fapi%2Fv1%2Fdivisions.json%22&format=json&callback=populateDivisionList")
 		})
 	</script>
 </head>
@@ -97,32 +96,8 @@
 						<div class="row">
 							<label for="link-color">daily deal for&nbsp;&nbsp;</label>
 							<select name="city" id="city_select">
-								<option disabled="disabled" selected="selected">-- Select a city --</option>
-								<option value="austin">Austin</option>
-								<option value="baltimore">Baltimore</option>
-								<option value="boston">Boston</option>
-								<option value="charlotte">Charlotte</option>
-								<option value="chicago">Chicago</option>
-
-								<option value="dallas">Dallas</option>
-								<option value="denver">Denver</option>
-								<option value="houston">Houston</option>
-								<option value="los-angeles">Los Angeles</option>
-
-								<option value="miami">Miami</option>
-								<option value="minneapolis-stpaul">Minneapolis / St Paul</option>
-								<option value="nashville">Nashville</option>
-								<option value="new-york">New York</option>
-								<option value="philadelphia">Philadelphia</option>
-								<option value="phoenix">Phoenix</option>
-
-								<option value="portland">Portland</option>
-								<option value="san-diego">San Diego</option>
-								<option value="san-francisco">San Francisco</option>
-								<option value="seattle">Seattle</option>
-								<option value="stlouis">St Louis</option>
-								<option value="tampa">Tampa</option>
-								<option value="washington-dc">Washington DC</option>
+								<option selected="selected" value="">Auto-detect</option>
+								
 							</select>
 						</div>
 					</div><!--city-selector-wrap-->

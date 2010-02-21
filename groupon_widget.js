@@ -438,6 +438,23 @@ String.prototype.template = function (o) {
                 50)
             }
         };
+        
+        M.loadGeoIpScript = function() {
+          if (!GRPN.Widget.loadingGeoIpScript) {
+              GRPN.Widget.loadingGeoIpScript = true;
+              var script = document.createElement("script");
+              script.type = "text/javascript";
+              script.src = "http://j.maxmind.com/app/geoip.js";
+              document.getElementsByTagName("head")[0].appendChild(script);
+              var timer = setInterval(function () {
+                  if (window["geoip_latitude"]) {
+                    clearInterval(timer);
+                    GRPN.Widget.hasLoadedGeoIpScript = true
+                  }
+              },
+              50)
+          }
+        };
         (function () {
             var Z = false;
             M.css = function (c) {
@@ -467,6 +484,8 @@ String.prototype.template = function (o) {
         GRPN.Widget.isLoaded = false;
         GRPN.Widget.loadingStyleSheet = false;
         GRPN.Widget.hasLoadedStyleSheet = false;
+        GRPN.Widget.loadingGeoIpScript = false;
+        GRPN.Widget.hasLoadedGeoIpScript = false;
         GRPN.Widget.WIDGET_NUMBER = 0;
         
         GRPN.Widget.jsonP = function (a, b) {
@@ -481,17 +500,17 @@ String.prototype.template = function (o) {
             return {
                 init: function (options) {
                     var self = this;
-                    this.city = options.city;
-                    
                     this._widgetNumber = ++GRPN.Widget.WIDGET_NUMBER;
                     GRPN.Widget["receiveCallback_" + this._widgetNumber] = function (response) {
-                      if(response.deals.length > 0){
-                        self.deal = response.deals[0];
+                      if(response.query.results.json.deals){
+                        self.deals = response.query.results.json.deals;
+                        self.deal = self.deals[0] || self.deals;
+                        self.city = self.deal.division_name;
                         self._formatDollars(self.deal, ["discount_amount", "price", "value"]);
                         self._addReferralCodeToLinks(self.deal);
                         self._normalizeUrlParams(self.deal);
                       }
-                      self.status = response.status
+                      self.status = response.query.results.json.status
                       self.renderHTML();
                       self.countDown = new GRPN.countdown({targetDate: strToTime(self.deal.end_date)}).start();
                     };
@@ -504,7 +523,6 @@ String.prototype.template = function (o) {
                     this.runOnce = false;
                     this.jsonMaxRequestTimeOut = 19000;
                     this.id = options.id || "groupon_widget";
-                    this._setUrl();
                     this.deal = {};
                     this.theme = Extend(options.theme || {}, this._getDefaultTheme());
                     //buttons needs extended too
@@ -541,7 +559,16 @@ String.prototype.template = function (o) {
                 },
                 _setUrl: function () {
                     var self = this;
-                    self.url = API_PROXY_HOST + "?call=deals&city=" + this.city + "&callback=" + this._cb;
+                    //self.url = API_PROXY_HOST + "?call=deals&city=" + this.city + "&callback=" + this._cb;
+                    if(this.city && this.city != "")
+                      var locationParams = "%3Fdivision%3D" + this.city;
+                    else
+                      var locationParams = "%3Flat%3D" + geoip_latitude() + "%26lng%3D" + geoip_longitude();
+                      
+                    self.url = "http://query.yahooapis.com/v1/public/yql?q="+
+                                   "select%20*%20from%20json%20where%20url%20%3D%20%22"+
+                                   "http%3A%2F%2Fgroupon.com%2Fapi%2Fv1%2Fdeals.json" + 
+                                   locationParams + "%22&format=json&callback=" + this._cb;
                     return this
                 },
                 setTheme: function (k, f) {
@@ -570,25 +597,33 @@ String.prototype.template = function (o) {
                 
                 
                 render: function() {
+                  var self = this;
+                  if(this.opts.city && this.opts.city != "")
+                    this.city = this.opts.city;
+                  else{
+                    if (!GRPN.Widget.hasLoadedGeoIpScript)
+                      M.loadGeoIpScript();
+                  }
+                  if (!self._externalDependenciesFulfilled()) {
+                      window.setTimeout(function () {
+                          self.render.call(self)
+                      },
+                      50);
+                      return this
+                  }
+                  this._setUrl();
                   this._loadDeal();
                   return this;
                 },
                 
                 renderHTML: function () {
-                    var self = this;
-                    if (!GRPN.Widget.hasLoadedStyleSheet) {
-                        window.setTimeout(function () {
-                            self.renderHTML.call(self)
-                        },
-                        50);
-                        return this
-                    }
-                    this.setTheme(this.theme);
-                    this.widgetEl.innerHTML = this._getWidgetHtml();
-                    
-                    this._rendered = true;
-                    this._ready();
-                    return this
+                  var self = this;
+                  this.setTheme(this.theme);
+                  this.widgetEl.innerHTML = this._getWidgetHtml();
+                  
+                  this._rendered = true;
+                  this._ready();
+                  return this
                 },
                 removeEvents: function () {},
                 _formatDollars: function(obj, vals) {
@@ -691,6 +726,17 @@ String.prototype.template = function (o) {
                   GRPN.Widget.jsonP(self.url, function (response) {
                       this.scriptElement = response;
                   })
+                },
+                
+                _externalDependenciesFulfilled: function() {
+                  var fulfilled = false;
+                  var deps = [GRPN.Widget.hasLoadedStyleSheet];
+                  if (!this.city || this.city == "")
+                    deps.push(GRPN.Widget.hasLoadedGeoIpScript)
+                  for(var i = 0; i < deps.length; i++){
+                    fulfilled = deps[i];
+                  }
+                  return fulfilled;
                 },
                 
                 stop: function() {
