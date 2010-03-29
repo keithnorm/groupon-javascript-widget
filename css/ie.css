@@ -6,7 +6,7 @@
 }
 #groupon_widget {
   background-image: none 
-  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../img/rays.png', sizingMethod='image')
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/rays.png', sizingMethod='image')
 }
 #groupon_widget table#number_bought tr td#number{
   padding-top:10px;

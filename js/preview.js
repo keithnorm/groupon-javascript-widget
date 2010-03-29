@@ -1,7 +1,7 @@
 $(function () {
   $("#rounded").click(function(){
-    $("#groupon_widget").toggleClass("rounded_on");
-    $("#groupon_box").toggleClass("rounded_on");
+    $("#groupon_widget").toggleClass("rounded");
+    $("#groupon_box").toggleClass("rounded");
   });
   grouponUpdatePreview();
 })
@@ -47,5 +47,5 @@ function grouponUpdatePriceTagColor(hex){
 }
 
 function grouponUpdateRounded(){
-  jQuery("#groupon_widget").toggleClass("rounded_on");
+  jQuery("#groupon_widget").toggleClass("rounded");
 }
