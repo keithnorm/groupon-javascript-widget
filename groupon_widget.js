@@ -52,21 +52,6 @@ String.prototype.template = function (o) {
         return
     }
 
-    function GrouponWidget(B, D, C) {
-        this.el = B;
-        this.prop = D;
-        this.from = C.from;
-        this.to = C.to;
-        this.time = C.time;
-        this.callback = C.callback;
-    }
-    GrouponWidget.canTransition = function () {
-        var B = document.createElement("twitter");
-        B.style.cssText = "-webkit-transition: all .5s linear;";
-        return !!B.style.webkitTransitionProperty
-    } ();
-    
-    
     GRPN.countdown = function (opts) {
         this.init(opts)
         return this;
@@ -139,21 +124,45 @@ String.prototype.template = function (o) {
       }
     };
     
-    GRPN.Widget = function (B) {
-        this.init(B)
+    GRPN.Widget = function (opts) {
+        this.init(opts)
     };
     
+    GRPN.Widget.userIpRetrieved = function(response) {
+      GRPN.Widget.getGeoFromIp(response.ip);
+    };
+
+		GRPN.Widget.getGeoFromIp = function(ip) {
+			var yql = 'select * from geo.places where woeid in ('+
+								'select place.woeid from flickr.places where (lat,lon) in('+
+								'select Latitude,Longitude from ip.location'+
+								' where ip="'+ip+'"))';
+			GRPN.Widget.loadFromYQL(yql,'GRPN.Widget.geoFromIpRetrieved', "store://datatables.org/alltableswithkeys");
+
+		};
+		
+		GRPN.Widget.geoFromIpRetrieved = function(response) {
+			var northBounds = response.query.results.place.boundingBox.northEast;
+			GRPN.Widget.userLat = northBounds.latitude;
+			GRPN.Widget.userLng = northBounds.longitude;
+			GRPN.Widget.hasLoadedUserLoc = true;
+		};
+
+		GRPN.Widget.loadFromYQL = function(query, callback, table) {
+			var src = 'http://query.yahooapis.com/v1/public/yql?q='+
+								encodeURIComponent(query) + '&format=json&callback=' + callback; 
+			if(table)
+			  src += "&env=" + table
+			var head = document.getElementsByTagName('head')[0];
+			var s = document.createElement('script');
+			s.setAttribute('src',src);
+			s.setAttribute('type', 'text/javascript');
+			head.appendChild(s);
+		};
+    
     (function () {
-        var M = {};
-        var Y = {};
-        var W = function (a) {
-            var Z = Y[a];
-            if (!Z) {
-                Z = new RegExp("(?:^|\\s+)" + a + "(?:\\s+|$)");
-                Y[a] = Z
-            }
-            return Z
-        };
+        var Util = {};
+        
         var isIE = function () {
             var agent = navigator.userAgent;
             return {
@@ -161,68 +170,34 @@ String.prototype.template = function (o) {
             }
         } ();
         
-        var C = function (e, j, f, g) {
-            var j = j || "*";
-            var f = f || document;
-            var a = [],
-                Z = f.getElementsByTagName(j),
-                h = W(e);
-            for (var b = 0, d = Z.length; b < d; ++b) {
-                if (h.test(Z[b].className)) {
-                    a[a.length] = Z[b];
-                    if (g) {
-                        g.call(Z[b], Z[b])
-                    }
-                }
-            }
-            return a
+				var G = function(id){
+					if (typeof id == "string") {
+						return document.getElementById(id)
+					}
+					return id;
+				};
+				
+        var classNameRegex = function (a) {
+          return new RegExp("(?:^|\\s+)" + a + "(?:\\s+|$)");
         };
-        
-        //getElementById
-        var G = function (Z) {
-            if (typeof Z == "string") {
-                return document.getElementById(Z)
-            }
-            return Z
-        };
-        
-        var Q = function (Z) {
-            return Z.replace(/^\s+|\s+$/g, "")
-        };
-        var P = function () {
-            var Z = self.innerHeight;
-            var a = document.compatMode;
-            if ((a || X.ie)) {
-                Z = (a == "CSS1Compat") ? document.documentElement.clientHeight : document.body.clientHeight
-            }
-            return Z
-        };
-        var V = function (b, Z) {
-            var a = b.target || b.srcElement;
-            return Z(a)
-        };
-        var getParentIfTextNode = function (a) {
-            try {
-                if (a && 3 == a.nodeType) {
-                    return a.parentNode
-                } else {
-                    return a
-                }
-            } catch(Z) {}
-        };
-        var O = function (a) {
-            var Z = a.relatedTarget;
-            if (!Z) {
-                if (a.type == "mouseout") {
-                    Z = a.toElement
-                } else {
-                    if (a.type == "mouseover") {
-                        Z = a.fromElement
-                    }
-                }
-            }
-            return N(Z)
-        };
+				
+				var getElementsByClassName = function (matchClass, tag, container, callback) {
+          var tag = tag || "*";
+          var container = container || document;
+          var a = [],
+              els = container.getElementsByTagName(tag),
+              regex = classNameRegex(matchClass);
+          for (var i = 0, d = els.length; i < d; ++i) {
+              if (regex.test(els[i].className)) {
+                  a[a.length] = els[i];
+                  if (callback) {
+                      callback.call(els[i], els[i])
+                  }
+              }
+          }
+          return a
+      };
+
         var prepend = function (a, Z) {
             Z.parentNode.insertBefore(a, Z.nextSibling)
         };
@@ -234,20 +209,13 @@ String.prototype.template = function (o) {
         var getFirstChild = function (Z) {
             return Z.firstChild
         };
-        var B = function (b) {
-            var a = O(b);
-            while (a && a != this) {
-                try {
-                    a = a.parentNode
-                } catch(Z) {
-                    a = this
-                }
-            }
-            if (a != this) {
-                return true
-            }
-            return false
+        
+        var removeElement = function (el) {
+            try {
+                c.parentNode.removeChild(el)
+            } catch (err) {}
         };
+        
         var getStyle = function () {
             if (document.defaultView && document.defaultView.getComputedStyle) {
                 return function (a, d) {
@@ -274,7 +242,7 @@ String.prototype.template = function (o) {
             },
             add: function (Z, a) {
                 if (!this.has(Z, a)) {
-                    G(Z).className = Q(G(Z).className) + " " + a
+                    G(Z).className = G(Z).className + " " + a
                 }
             },
             remove: function (Z, a) {
@@ -338,89 +306,7 @@ String.prototype.template = function (o) {
           
         }
         
-        var dateToWords = function (f) {
-            var h = new Date();
-            var d = new Date(f);
-            if (X.ie) {
-                d = Date.parse(f.replace(/( \+)/, " UTC$1"))
-            }
-            var g = h - d;
-            var a = 1000,
-                b = a * 60,
-                c = b * 60,
-                e = c * 24,
-                Z = e * 7;
-            if (isNaN(g) || g < 0) {
-                return ""
-            }
-            if (g < a * 7) {
-                return "right now"
-            }
-            if (g < b) {
-                return Math.floor(g / a) + " seconds ago"
-            }
-            if (g < b * 2) {
-                return "about 1 minute ago"
-            }
-            if (g < c) {
-                return Math.floor(g / b) + " minutes ago"
-            }
-            if (g < c * 2) {
-                return "about 1 hour ago"
-            }
-            if (g < e) {
-                return Math.floor(g / c) + " hours ago"
-            }
-            if (g > e && g < e * 2) {
-                return "yesterday"
-            }
-            if (g < e * 365) {
-                return Math.floor(g / e) + " days ago"
-            } else {
-                return "over a year ago"
-            }
-        };
-        
-        function L(a, b, Z) {
-            this.job = a;
-            this.decayFn = b;
-            this.interval = Z;
-            this.decayRate = 1;
-            this.decayMultiplier = 1.25;
-            this.maxDecayTime = 3 * 60 * 1000
-        }
-        L.prototype = {
-            start: function () {
-                this.stop().run();
-                return this
-            },
-            stop: function () {
-                if (this.worker) {
-                    window.clearTimeout(this.worker)
-                }
-                return this
-            },
-            run: function () {
-                var Z = this;
-                this.job(function () {
-                    Z.decayRate = Z.decayFn() ? Math.max(1, Z.decayRate / Z.decayMultiplier) : Z.decayRate * Z.decayMultiplier;
-                    var a = Z.interval * Z.decayRate;
-                    a = (a >= Z.maxDecayTime) ? Z.maxDecayTime : a;
-                    a = Math.floor(a);
-                    Z.worker = window.setTimeout(function () {
-                        Z.run.call(Z)
-                    },
-                    a)
-                })
-            },
-            destroy: function () {
-                this.stop();
-                this.decayRate = 1;
-                return this
-            }
-        };
-
-        M.loadStyleSheet = function (b, a) {
+        Util.loadStyleSheet = function (b, a) {
             if (!GRPN.Widget.loadingStyleSheet) {
                 GRPN.Widget.loadingStyleSheet = true;
                 var Z = document.createElement("link");
@@ -439,25 +325,20 @@ String.prototype.template = function (o) {
             }
         };
         
-        M.loadGeoIpScript = function() {
-          if (!GRPN.Widget.loadingGeoIpScript) {
-              GRPN.Widget.loadingGeoIpScript = true;
-              var script = document.createElement("script");
-              script.type = "text/javascript";
-              script.src = "http://j.maxmind.com/app/geoip.js";
-              document.getElementsByTagName("head")[0].appendChild(script);
-              var timer = setInterval(function () {
-                  if (window["geoip_latitude"]) {
-                    clearInterval(timer);
-                    GRPN.Widget.hasLoadedGeoIpScript = true
-                  }
-              },
-              50)
-          }
+        Util.loadUserLoc = function(ip) {
+          if (!GRPN.Widget.loadingGeoFromIP) {
+          	GRPN.Widget.loadingGeoFromIP = true;
+						Util.retrieveUserIP();
+					}              
         };
+        
+        Util.retrieveUserIP = function() {
+          GRPN.Widget.jsonP('http://jsonip.appspot.com/?callback=GRPN.Widget.userIpRetrieved', function(){});
+				};
+
         (function () {
             var Z = false;
-            M.css = function (c) {
+            Util.css = function (c) {
                 var b = document.createElement("style");
                 b.type = "text/css";
                 if (isIE.ie) {
@@ -485,7 +366,7 @@ String.prototype.template = function (o) {
         GRPN.Widget.loadingStyleSheet = false;
         GRPN.Widget.hasLoadedStyleSheet = false;
         GRPN.Widget.loadingGeoIpScript = false;
-        GRPN.Widget.hasLoadedGeoIpScript = false;
+        GRPN.Widget.hasLoadedUserLoc = false;
         GRPN.Widget.WIDGET_NUMBER = 0;
         
         GRPN.Widget.jsonP = function (a, b) {
@@ -516,11 +397,7 @@ String.prototype.template = function (o) {
                     };
                     this._cb = "GRPN.Widget.receiveCallback_" + this._widgetNumber;
                     this.opts = options;
-                    this._isRunning = false;
-                    this._hasOfficiallyStarted = false;
                     this._rendered = false;
-                    this.timesRequested = 0;
-                    this.runOnce = false;
                     this.jsonMaxRequestTimeOut = 19000;
                     this.id = options.id || "groupon_widget";
                     this.deal = {};
@@ -535,23 +412,15 @@ String.prototype.template = function (o) {
                     if (options.id) {
                         className.add(this.widgetEl, "GRPN-widget")
                     }
-                    M.loadStyleSheet(GROUPON_WIDGET_HOST + "widget.css", this.widgetEl)
+                    Util.loadStyleSheet(GROUPON_WIDGET_HOST + "widget.css", this.widgetEl)
                     this._ready = is.fn(options.ready) ? options.ready : function () {};
                     return this
                 },
-                setDimensions: function (f, g) {
+                setDimensions: function (w, h) {
                     //maybe nothing to do here, but might need later
                     return this
                 },
                 
-                setBase: function (f) {
-                    this._base = f;
-                    return this
-                },
-                setUser: function (g, f) {
-                    //hmmm..
-                    return this
-                },
                 setTitle: function (f) {
                     this.title = f;
                     this.widgetEl.getElementsByTagName("h3")[0].innerHTML = this.title;
@@ -563,13 +432,13 @@ String.prototype.template = function (o) {
                     if(this.city && this.city != "")
                       var locationParams = "%3Fdivision%3D" + this.city;
                     else
-                      var locationParams = "%3Flat%3D" + geoip_latitude() + "%26lng%3D" + geoip_longitude();
+                      var locationParams = "%3Flat%3D" + GRPN.Widget.userLat + "%26lng%3D" + GRPN.Widget.userLng;
                       
                     self.url = "http://query.yahooapis.com/v1/public/yql?q="+
                                    "select%20*%20from%20json%20where%20url%20%3D%20%22"+
                                    "http%3A%2F%2Fgroupon.com%2Fapi%2Fv1%2Fdeals.json" + 
                                    locationParams + "%22&format=json&callback=" + this._cb;
-                    return this
+                    return this;
                 },
                 setTheme: function (k, f) {
                     var i = this;
@@ -586,12 +455,12 @@ String.prototype.template = function (o) {
                     if (isIE.ie) {
                         h += "#groupon_widget #get_it {background: " + this.theme.buttons.get_it_btn.background + "}";
                     }
-                    M.css(h);
+                    Util.css(h);
                     return this
                 },
-                byClass: function (i, f, g) {
-                    var h = C(i, f, G(this.id));
-                    return (g) ? h : h[0]
+                byClass: function (matchClass, tag, single) {
+                    var els = getElementsByClassName(matchClass, tag, G(this.id));
+                    return (single) ? els : els[0]
                 },
                 
                 
@@ -600,11 +469,10 @@ String.prototype.template = function (o) {
                   var self = this;
                   if(this.opts.city && this.opts.city != "")
                     this.city = this.opts.city;
-                  else{
-                    if (!GRPN.Widget.hasLoadedGeoIpScript)
-                      M.loadGeoIpScript();
-                  }
-                  if (!self._externalDependenciesFulfilled()) {
+                  else {
+										Util.loadUserLoc();
+									}
+									if (!self._externalDependenciesFulfilled()) {
                       window.setTimeout(function () {
                           self.render.call(self)
                       },
@@ -732,7 +600,7 @@ String.prototype.template = function (o) {
                   var fulfilled = false;
                   var deps = [GRPN.Widget.hasLoadedStyleSheet];
                   if (!this.city || this.city == "")
-                    deps.push(GRPN.Widget.hasLoadedGeoIpScript)
+                    deps.push(GRPN.Widget.hasLoadedUserLoc)
                   for(var i = 0; i < deps.length; i++){
                     fulfilled = deps[i];
                   }
@@ -749,7 +617,7 @@ String.prototype.template = function (o) {
                     var f = this.byClass("GRPN-new-results", "div", true);
                     g = g.concat(f);
                     g.forEach(function (h) {
-                        T(h)
+                        removeElement(h)
                     });
                     return this
                 },
