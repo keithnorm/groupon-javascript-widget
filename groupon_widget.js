@@ -133,18 +133,16 @@ String.prototype.template = function (o) {
     };
 
 		GRPN.Widget.getGeoFromIp = function(ip) {
-			var yql = 'select * from geo.places where woeid in ('+
-								'select place.woeid from flickr.places where (lat,lon) in('+
-								'select Latitude,Longitude from ip.location'+
-								' where ip="'+ip+'"))';
+			var yql = 'select Latitude,Longitude from ip.location'+
+								' where ip="'+ip+'"';
 			GRPN.Widget.loadFromYQL(yql,'GRPN.Widget.geoFromIpRetrieved', "store://datatables.org/alltableswithkeys");
 
 		};
 		
 		GRPN.Widget.geoFromIpRetrieved = function(response) {
-			var northBounds = response.query.results.place.boundingBox.northEast;
-			GRPN.Widget.userLat = northBounds.latitude;
-			GRPN.Widget.userLng = northBounds.longitude;
+			var result = response.query.results.Response;
+			GRPN.Widget.userLat = result.Latitude;
+			GRPN.Widget.userLng = result.Longitude;
 			GRPN.Widget.hasLoadedUserLoc = true;
 		};
 
